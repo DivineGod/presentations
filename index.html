@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+  <title>voided warranty | presentations</title>
+  <link rel="canonical" href="https://slides.mjolner.tech">
+  <meta name="voided" content="warranty">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="voided warranty | presentations">
+  <meta name="description" content="Public presentations from mjolner.tech">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="voided warranty | presentations">
+  <meta property="og:title" content="voided warranty | presentations">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://slides.mjolner.tech">
+  <meta property="og:description" content="Public presentations from mjolner.tech">
+  <meta property="og:image" content="">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary">
+  <meta property="twitter:url" content="https://slides.mjolner.tech">
+  <meta property="twitter:title" content="voided warranty | presentations">
+  <meta property="twitter:description" content="Public presentations from mjolner.tech">
+  <meta property="twitter:image" content="">
+
+
+  
+  <!-- Microdata -->
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "website",
+      "name": "voided warranty | presentations",
+      "url": "https://slides.mjolner.tech",
+      "description": "Public presentations from mjolner.tech",
+      "about": {
+        "@type": "voided warranty | presentations",
+        "description": "Public presentations from mjolner.tech"
+      }
+    }
+  </script>
+  <link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E🧵%3C/text%3E%3C/svg%3E">
+  <style>    
+    /* Font */
+    @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter&display=swap");
+    /* Settings */
+    :root {
+      --color-dark: #1b1d1c;
+      --color-light: #fafafa;
+      --color-primary: #ea1821;
+      --size-step-0: clamp(1rem, 1.5vw, 1.5rem);
+      --size-step-1: clamp(1.25rem, 2vw, 2.4rem);
+      --size-step-2: clamp(1.5rem, 2.5vw, 2.8rem);
+      --size-step-3: clamp(1.75rem, 3vw, 3.2rem);
+      --size-step-4: clamp(2rem, 4vw, 3.6vw);
+      --size-step-5: clamp(2.25rem, 5vw, 4rem);
+      --spacing: clamp(1rem, 2.5vw, 2rem);
+      --font-stack-headings: "Bebas Neue", system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+        sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+      --font-stack-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-dark: #fafafa;
+        --color-light: #1b1d1c;
+      }
+    }
+    /* HTML Styles */
+    body {
+      background: var(--color-light);
+      color: var(--color-dark);
+      padding: var(--spacing);
+      padding-top: 0;
+      font-family: var(--font-stack-body);
+      font-size: var(--size-step-0);
+      line-height: 1.3;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    header,
+    main,
+    footer {
+      width: 100%;
+    }
+    header {
+      padding-bottom: var(--spacing);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-family: var(--font-stack-headings);
+      position: sticky;
+      top: 0;
+      padding: var(--spacing) 0 calc(var(--spacing) / 1.5);
+      z-index: 1;
+      background-color: var(--color-light);
+    }
+    @media screen and (min-width: 600px) {
+      header {
+        flex-direction: row;
+        gap: var(--spacing);
+      }
+    }
+    main {
+      max-width: 64ch;
+      flex: 1;
+      padding-bottom: calc(var(--spacing) * 2);
+    }
+    a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+      text-decoration-color: var(--color-dark);
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border: calc(var(--spacing) / 4) solid var(--color-dark);
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-weight: 400;
+      line-height: 1;
+      text-wrap: balance;
+      font-family: var(--font-stack-headings);
+    }
+    h1 {
+      font-size: var(--size-step-4);
+    }
+    h2 {
+      font-size: var(--size-step-4);
+    }
+    h3 {
+      font-size: var(--size-step-3);
+    }
+    h4 {
+      font-size: var(--size-step-2);
+    }
+    h5 {
+      font-size: var(--size-step-1);
+    }
+    p,
+    ul,
+    ol,
+    blockquote,
+    .highlight,
+    .code {
+      max-width: 64ch;
+    }
+    ul,
+    ol {
+      -webkit-padding-start: var(--spacing);
+      padding-inline-start: var(--spacing);
+    }
+    li {
+      --flow-space: var(--spacing);
+      margin-block-start: var(--flow-space, var(--spacing));
+    }
+    blockquote {
+      -webkit-padding-start: var(--spacing);
+      padding-inline-start: var(--spacing);
+      -webkit-border-start: 0.3em solid;
+      border-inline-start: 0.3em solid;
+      font-style: italic;
+      font-size: var(--size-step-1);
+    }
+    /* Utilities */
+    content > div > * {
+      -webkit-margin-before: var(--flow-space, var(--spacing));
+      margin-block-start: var(--flow-space, var(--spacing));
+    }
+    /* Flow and rythm */
+    :is(h1, h2, h3, h4, h5, blockquote) {
+      --flow-space: calc(var(--spacing) * 2);
+      margin-block-end: calc(var(--spacing) / 2);
+    }
+    :is(h1, h2, h3, h4, h5) + * {
+      --flow-space: calc(var(--spacing) / 3);
+    }
+    :is(h1, h2, h3, h4, h5) + :where(h2, h3, h4, h5) {
+      --flow-space: calc(var(--spacing) * 2);
+    }
+    /* Line
+    lengths */
+    main,
+    header,
+    footer {
+      margin-inline: auto;
+    }
+    blockquote {
+      max-width: 50ch;
+    }
+    h1 {
+      max-width: 32ch;
+    }
+    h2,
+    h3 {
+      max-width: 36ch;
+    }
+    /* Bear Content */
+    .title {
+      text-decoration: none;
+    }
+    .title h1 {
+      font-size: var(--size-step-5);
+      color: var(--color-dark);
+      margin: 0;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    nav ol {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing);
+      row-gap: 0;
+      font-size: var(--size-step-5);
+      margin: 0;
+      line-height: 0.9;
+    }
+    nav ol li {
+      display: inline;
+    }
+    nav ol a {
+      line-height: 1;
+    }
+    ul.blog-posts {
+      list-style-type: none;
+      padding: unset;
+    }
+    time {
+      opacity: 0.5;
+      font-style: normal;
+    }
+    ul.blog-posts li {
+      display: flex;
+      flex-direction: column;
+      font-size: var(--size-step-3);
+      font-family: var(--font-stack-headings);
+    }
+    @media screen and (min-width: 600px) {
+      ul.blog-posts li {
+        flex-direction: row;
+        gap: calc(var(--spacing) / 2);
+      }
+    }
+    ul.blog-posts li span {
+      min-width: 11ch;
+    }
+    .highlight,
+    .code {
+      padding: 1px var(--spacing);
+      background-color: rgba(0, 0, 0, 0.1);
+      overflow-x: auto;
+      line-height: 1;
+    }
+    button {
+      background-image: none;
+      background-color: var(--color-primary);
+      color: var(--color-light);
+      border: none;
+      padding: calc(var(--spacing) / 4) calc(var(--spacing) / 2);
+      font-size: var(--size-step-0);
+      font-family: var(--font-stack-headings);
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+    }
+    th {
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body class="home">
+  <header>
+    <a class="title" href="/">
+      <h1>
+        voided warranty
+      </h1>
+    </a>
+    <nav>
+      <ol>
+        <li><a href='https://mjolner.tech/'>mjolner.tech</a></li>
+        <li><a href='/blog/'>Blog</a></li>
+        <li><a href='/'>Slides</a></li>
+      </ol>
+    </nav>
+  </header>
+  <main>
+    <p>Public presentations from mjolner.tech</p>
+    <p>If you’ve somehow managed to make it here and reading this I’m available <a href='https://mjolner.tech/'>for hire for remote work</a></
+  </main>
+  <footer style="padding:25px 0;">
+    <span>
+        Powered by <a href="https://mjolner.tech">Ando</a>
+    </span>
+  </footer>
+</body>
+</html>
