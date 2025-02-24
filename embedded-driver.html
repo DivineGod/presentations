@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Rust in ten slides</title>
+        <title>Embedded Device Driver in Rust</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="styles.css" />
         <style>
@@ -167,9 +167,9 @@
     <body>
         <textarea id="source">
             layout: true
-            class: middle
+            class: middle, inverse
             ---
-            class: middle, center
+            class: middle, center, inverse
 
             # Embedded Device Driver in Rust
 
@@ -188,9 +188,11 @@
             6. Q&A & Live Demo
 
             ---
-            class: middle, left
+            class: middle, center, inverse
 
             # Introduction
+            ---
+            class: middle, left
 
             **Anders Rasmussen**——**@voided@hachyderm.io**
 
@@ -208,6 +210,18 @@
             - Embedded Rust since 2020
 
             ---
+            class: middle, center, inverse
+
+            # Background
+            ---
+
+            # Why this presentation?
+
+            - Made redundant Nov 2024
+            - Needed to fill my time
+            - Upskilling in a bunch of different areas
+
+            ---
 
             # Why Embedded Rust?
 
@@ -221,7 +235,7 @@
 
             - Directly interface with hardware
             - Improve performance and control
-            - Rust ensures safer memory access compared to C
+            - Provide a safe and convenient programming interface
 
             ---
 
@@ -250,6 +264,25 @@
             ### Communication:
             - I²C interface (10KHz-400KHz)
             - Interrupt Request (IRQ) pin for event signaling
+
+            ---
+
+            # Implementation Test Device
+
+            Waveshare RP2040 1.28 Round LCD Touch
+
+            **Pros:**
+            - Affordable
+            - Feature rich
+            - Small
+
+            **Cons:**
+            - Limited debugging capability
+
+            ---
+            class: middle, center, inverse
+
+            # Implementation Walkthrough
 
             ---
 
@@ -388,7 +421,7 @@
             # What is a Bus?
 
             - A communication system that transfers data between components
-            - Can be parallel (multiple wires) or serial (single wire pair)
+            - Can be parallel (multiple data wires) or serial (single data wire)
             - Examples: PCI, SPI, I²C, UART
 
             ---
@@ -402,6 +435,7 @@
               - **SDA (Serial Data Line)**
             - Supports multiple devices on the same bus
               - Differentiated with device address
+            - Communication always initiated by the controller node
 
             ---
 
@@ -550,21 +584,55 @@
             - Observing touch inputs and responses
 
             ---
+            class: middle, center, inverse
 
             # Challenges & Lessons Learned
 
-            - Handling incomplete or unclear device documentation
-            - Translating register definitions into Rust's type system
-            - Balancing safety and performance in embedded contexts
-            - Leveraging community resources and prior implementations
+            ---
+            class: middle, center
+            # Challenges & Lessons Learned
 
             ---
+            class: middle, center
+            # Challenges & Lessons Learned
 
+            ### Handling incomplete or unclear device documentation
+            ### Leveraging community resources and prior implementations
+
+            ---
+            class: middle, center
+            # Challenges & Lessons Learned
+
+            ### Translating register definitions into Rust's type system
+            ### Tedious but a lot less boilerplate than a traditional approach
+
+            ---
+            class: middle, center
+            # Challenges & Lessons Learned
+
+            ### Balancing safety and performance in embedded contexts
+            ### Can focus on the public API instead
+
+            ---
+            class: middle, center
+            # Challenges & Lessons Learned
+
+            ### Difficulty debugging the test device
+            ### rp2040 doesn't support `probe-rs` logging without a debug probe
+
+            ---
+            class: middle, center
+
+            # Conclusion
+
+            ---
             # Conclusion
 
             - Rust offers a robust platform for embedded device drivers
             - The `device-driver` crate streamlines low-level hardware interactions
             - Continuous learning and adaptation are key in embedded development
+            - Make sure development hardware has proper debugging output
+             - `probe-rs` and `defmt` are valuable crates for embedded development
 
             ---
 
