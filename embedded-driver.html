@@ -4,33 +4,568 @@
         <title>Rust in ten slides</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="styles.css" />
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+            @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+            @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+            body {
+                font-family: "Droid Serif";
+                line-height: 2.5em;
+            }
+            h1,
+            h2,
+            h3 {
+                font-family: "Yanone Kaffeesatz";
+                font-weight: 400;
+                margin-bottom: 0;
+            }
+            .remark-slide-content h1 {
+                font-size: 3em;
+            }
+            .remark-slide-content h2 {
+                font-size: 2em;
+            }
+            .remark-slide-content h3 {
+                font-size: 1.6em;
+            }
+            .footnote {
+                position: absolute;
+                bottom: 3em;
+            }
+            li p {
+            }
+            .red {
+                color: #fa0000;
+            }
+            .large {
+                font-size: 2em;
+            }
+            a,
+            a > code {
+                color: rgb(249, 38, 114);
+                text-decoration: none;
+            }
+            code {
+                background: #e7e8e2;
+                border-radius: 5px;
+                line-height: 1.25em;
+            }
+            blockquote {
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C" "\201D" "\2018" "\2019";
+            }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+                width: 4em;
+            }
+            blockquote p {
+                display: inline;
+            }
+
+            blockquote + p {
+                text-align: right;
+            }
+
+            .remark-code,
+            .remark-inline-code {
+                font-family: "Ubuntu Mono";
+            }
+            .remark-code-line-highlighted {
+                background-color: #373832;
+            }
+            .pull-left {
+                float: left;
+                width: 47%;
+            }
+            .pull-right {
+                float: right;
+                width: 47%;
+            }
+            .pull-right ~ p {
+                clear: both;
+            }
+            #slideshow .slide .content code {
+                font-size: 0.8em;
+            }
+            #slideshow .slide .content pre code {
+                font-size: 0.9em;
+                padding: 15px;
+            }
+            .inverse {
+                background: #272822;
+                color: #777872;
+                text-shadow: 0 0 20px #333;
+            }
+            .inverse h1,
+            .inverse h2 {
+                color: #f3f3f3;
+                line-height: 0.8em;
+            }
+
+            /* Slide-specific styling */
+            #slide-inverse .footnote {
+                bottom: 12px;
+                left: 20px;
+            }
+            #slide-how .slides {
+                font-size: 0.9em;
+                position: absolute;
+                top: 151px;
+                right: 140px;
+            }
+            #slide-how .slides h3 {
+                margin-top: 0.2em;
+            }
+            #slide-how .slides .first,
+            #slide-how .slides .second {
+                padding: 1px 20px;
+                height: 90px;
+                width: 120px;
+                -moz-box-shadow: 0 0 10px #777;
+                -webkit-box-shadow: 0 0 10px #777;
+                box-shadow: 0 0 10px #777;
+            }
+            #slide-how .slides .first {
+                background: #fff;
+                position: absolute;
+                top: 20%;
+                left: 20%;
+                z-index: 1;
+            }
+            #slide-how .slides .second {
+                position: relative;
+                background: #fff;
+                z-index: 0;
+            }
+
+            /* Two-column layout */
+            .left-column {
+                color: #777;
+                width: 20%;
+                height: 92%;
+                float: left;
+            }
+            .left-column h2:last-of-type,
+            .left-column h3:last-child {
+                color: #000;
+            }
+            .right-column {
+                width: 75%;
+                float: right;
+                padding-top: 1em;
+            }
+        </style>
     </head>
     <body>
         <textarea id="source">
-class: middle, center
+            layout: true
+            class: middle
+            ---
+            class: middle, center
 
-# Embedded Device Driver
+            # Embedded Device Driver in Rust
 
-### This presentation will help go through the use of the `device-driver` crate to implement a driver for a touch screen
+            ## Using the `device-driver` crate
 
----
-class: middle, left
+            ---
+            class: middle, left
 
-## Meet our test-device
+            # Agenda
 
-Waveshare RP2040 1.28 Round LCD Touch
+            1. Introduction
+            2. Background: Embedded Rust & Device Drivers
+            3. Implementation Walkthrough
+            4. Challenges & Lessons Learned
+            5. Conclusion
+            6. Q&A & Live Demo
 
-![RP2040 Touch LCD ](./assets/embedded-driver/rp2040-touch-lcd-1.28-1_1.jpg)
+            ---
+            class: middle, left
 
----
-class: middle, left
+            # Introduction
 
-## Meet the touch device
+            **Anders Rasmussen**——**@voided@hachyderm.io**
 
----
-class: middle, left
+            - Senior Software Engineer
+            - Rust since 2017
+            - Embedded Rust since 2020
 
-## Driver Data Sheet
+            ---
+
+            # Why Embedded Rust?
+
+            - Memory safety without garbage collection
+            - Concurrency without data races
+            - Strong type system for safer APIs
+            - Growing ecosystem and community support
+
+            ---
+
+            # Why Write a Device Driver?
+
+            - Directly interface with hardware
+            - Improve performance and control
+            - Rust ensures safer memory access compared to C
+
+            ---
+
+            # The `device-driver` Crate
+
+            - Provides a framework for writing device drivers in Rust
+            - Abstracts common driver tasks
+            - Encourages safety and modularity
+
+            ---
+
+            # Target Device: Hynitron CST816S
+
+            ### Features:
+              - High-performance self-capacitance touch chip
+              - &amp;gt;100Hz touch reporting frequency in Dynamic Mode
+              - Low power consumption:
+                - Dynamic Mode: <1.6mA
+                - Standby Mode: <6.0µA
+                - Sleep Mode: <1.0µA
+
+            ---
+
+            # Target Device: Hynitron CST816S
+
+            ### Communication:
+              - I²C interface (10KHz-400KHz)
+              - Interrupt Request (IRQ) pin for event signaling
+
+            ---
+
+            # Implementing the Driver
+
+            - Using DSL macro `device_driver::create_device!`
+
+            ---
+
+            # Using the `device-driver` DSL
+
+            ## Global Config
+
+            ```rust
+            device_driver::create_device!(
+              device_name: CST816S, // Public name
+              dsl: {
+                config {
+                  // We know this from the Register Specification
+                  type RegisterAddressType = u8;
+                }
+                [ registers ... ]
+                [ commands ... ]
+                [ buffers ... ]
+              }
+            );
+            ```
+
+            ---
+
+            ## Simple register definition
+
+            ```rust
+            device_driver::create_device!(
+              dsl: {
+                config: { ... }
+                register ChipId {
+                  type Access = RO; // Access Type: RO, WO, RW
+                  const ADDRESS = 0xA7; // Register address from spec
+                  const SIZE_BITS = 8; // Reply value size
+                  value: uint = 0..8, // bits 0 to 8 (exluding 8) as uint
+                }
+              }
+            );
+            ```
+
+            ---
+
+            ## Custom Register Datatype
+
+            ```rust
+            device_driver::create_device!(
+              dsl: {
+                config: { ... }
+                register GestureId {
+                  type Access = RO;
+                  const ADDRESS = 0x01;
+                  const SIZE_BITS = 8;
+                  value: uint as try enum Gesture {
+                    NoGesture = 0x00,
+                    SlideUp = 0x01,
+                    SlideDown = 0x02,
+                    SlideLeft = 0x03,
+                    SlideRight = 0x04,
+                    SingleClick = 0x05,
+                    DoubleClick = 0x0B,
+                    LongPress = 0x0C,
+                  } = 0..8,
+                }
+              }
+            );
+            ```
+
+            ???
+            Convert each value to a enum variant
+            Needs to be fallible since the values have gaps
+
+            ---
+
+            # Custom Conversion Types
+
+            ## DSL Definition
+
+            ```rust
+            register IrqPulseWidth {
+              ...
+
+              value: uint as PulseWidth = 0..8
+            }
+            ```
+
+            ---
+
+            # Custom Conversion Types
+
+            ## Implementation
+
+            ```rust
+            #[derive(Debug)]
+            pub struct PulseWidth {
+                value: u8,
+            }
+
+            impl PulseWidth {
+              pub fn new(value: u8) -> Self {
+                debug_assert!(value > 0);
+                debug_assert!(value <= 200);
+                Self { value }
+              }
+            }
+            ```
+
+            ---
+
+            # Custom Conversion Types
+
+            ```rust
+            impl From<u8> for PulseWidth {
+              fn from(value: u8) -> Self {
+                dbg_assert!(value > 0);
+                dbg_assert!(value <= 200);
+                Self { value }
+              }
+            }
+
+            impl From<PulseWidth> for u8 {
+              fn from(value: PulseWidth) -> Self {
+                *value
+              }
+            }
+            ```
+
+
+            ---
+
+            # What is a Bus?
+
+            - A communication system that transfers data between components
+            - Can be parallel (multiple wires) or serial (single wire pair)
+            - Examples: PCI, SPI, I²C, UART
+
+            ---
+
+            # What is I²C?
+
+            - Stands for **Inter-Integrated Circuit**
+            - A serial communication protocol for low-speed peripherals
+            - Uses two lines:
+              - **SCL (Serial Clock Line)**
+              - **SDA (Serial Data Line)**
+            - Supports multiple devices on the same bus
+
+            ---
+
+            # Integrating I²C Communication
+
+            - Implement the `RegisterInterface` trait for I²C communication
+            - Utilize the `embedded-hal` crate for hardware abstraction
+            - Ensure safe and efficient data transfer between the driver and device
+
+            ---
+
+            # Creating a Low-level Driver Interface
+
+            Generic over the communication protocol
+
+            ```rust
+            pub(crate) struct DeviceInterface<I2C> {
+              device_address: SevenBitAddress,
+              i2c: I2C,
+            }
+
+            impl<I2C> DeviceInterface<I2C> {
+                pub(crate) const fn new(i2c: I2C, device_address: SevenBitAddress) -> Self {
+                Self {
+                 i2c,
+                 device_address,
+                }
+              }
+            }
+            ```
+
+            ---
+
+            # Implementing I²C Read Function
+
+            ```rust
+            impl<BUS: embedded_hal::i2c::I2c> RegisterInterface for DeviceInterface<I2C> {
+              type Error = DeviceError<BUS::Error>;
+              type AddressType = u8;
+
+              fn read_register(
+                &mut self,
+                address: Self::AddressType,
+                _size_bits: u32,
+                data: &mut [u8],
+              ) -> Result<(), Self::Error> {
+                self.i2c.write_read(self.device_address, &[address], data)?;
+                Ok(())
+              }
+            }
+            ```
+            Or `embedded_hal_async`, `AsyncRegisterInterface` for async implementations
+
+            ???
+            The implementation of DeviceError can be found in the example repo
+
+            ---
+
+            # Implementing I²C Write Function
+
+            ```rust
+            impl<BUS: embedded_hal::i2c::I2c> RegisterInterface for DeviceInterface<I2C> {
+              type Error = DeviceError<BUS::Error>;
+              type AddressType = u8;
+
+
+              fn write_register(
+                &mut self,
+                address: Self::AddressType,
+                _size_bits: u32,
+                data: &[u8],
+              ) -> Result<(), Self::Error> {
+                self.i2c.transaction(
+                  self.device_address,
+                  &mut [Operation::Write(&[address]), Operation::Write(data)],
+                )?;
+                Ok(())
+              }
+            }
+            ```
+
+            ---
+
+            # Handling Errors in I²C Communication
+
+            - Use Rust’s `Result` type for error handling
+            - Implement meaningful error messages for debugging
+            - Ensure graceful fallback in case of failures
+
+            ---
+
+            # High-level Driver
+
+            We're now into the territory of opinions of how to use the driver
+
+            I decided to spend a bit of time writing an `event` method, that reads gesture events
+
+            ---
+
+            ## Read a single touch event
+
+            ### Public interface struct
+
+            ```rust
+            /// Public interface struct for our High-level driver
+            pub struct CST816S<I2C, TPINT, TPRST> {
+              device: Device<DeviceInterface<I2C>>,
+              interrupt_pin: TPINT,
+              reset_pin: TPRST,
+            }
+            ```
+
+            ---
+
+            ## Read a single touch event
+
+            ```rust
+            impl<I2C, TPINT, TPRST> CST816S<I2C, TPINT, TPRST>
+            where
+              I2C: I2c,
+              TPINT: InputPin,
+              TPRST: OutputPin,
+            {
+              pub fn event(&mut self) -> Option<TouchEvent> {
+                if self.interrupt_pin.is_high().unwrap() { return None; }
+
+                let x = self.device.xpos().read().unwrap().value();
+                let y = self.device.ypos().read().unwrap().value();
+                let gesture = self.device.gesture_id().read().unwrap().value();
+
+                let point: Point = (x, y);
+
+                Some(TouchEvent {
+                  point,
+                  gesture,
+                })
+              }
+            }
+            ```
+
+            ---
+
+            # Live Demonstration
+
+            - Running the driver on real hardware
+            - Observing touch inputs and responses
+            - Showcasing safe memory access and error handling
+
+            ---
+
+            # Challenges & Lessons Learned
+
+            - Handling incomplete or unclear device documentation
+            - Translating register definitions into Rust's type system
+            - Balancing safety and performance in embedded contexts
+            - Leveraging community resources and prior implementations
+
+            ---
+
+            # Conclusion
+
+            - Rust offers a robust platform for embedded device drivers
+            - The `device-driver` crate streamlines low-level hardware interactions
+            - Continuous learning and adaptation are key in embedded development
+
+            ---
+
+            # Q&A & Further Discussion
+
+            ## Any questions?
+
+            _(Live demonstration continues if time permits)_
+
 
     </textarea
         >
