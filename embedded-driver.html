@@ -28,6 +28,11 @@
             .remark-slide-content h3 {
                 font-size: 1.6em;
             }
+
+            img {
+                width: 100%;
+            }
+
             .footnote {
                 position: absolute;
                 bottom: 3em;
@@ -171,9 +176,9 @@
             ---
             class: middle, center, inverse
 
-            # Embedded Device Driver in Rust
+            # How to make your own Smart Watch
 
-            ## Using the `device-driver` crate
+            ## Using the `device-driver` crate to integrate touch screen functionality
 
             ---
             class: middle, left
@@ -185,7 +190,7 @@
             3. Implementation Walkthrough
             4. Challenges & Lessons Learned
             5. Conclusion
-            6. Q&A & Live Demo
+            6. ~~Live Demo~~ | Demo in the back room at lunch
 
             ---
             class: middle, center, inverse
@@ -198,8 +203,9 @@
 
             **Anders Rasmussen**——**@voided@hachyderm.io**
 
-            - Senior Software Engineer since 2007 (professionally)
+            - Software Engineer since 2007 (professionally)
             - Tinkerer since childhood
+            - Tragic Project Starter
 
             ---
             class: middle, left
@@ -209,7 +215,12 @@
             **Anders Rasmussen**——**@voided@hachyderm.io**
 
             - Rust since 2017
-            - Embedded Rust since 2020
+            - Embedded Rust since 2020 - Pandemic Hobby
+
+            ---
+            class: middle, center
+
+            # Yes - it was mechanical keyboards
 
             ---
             class: middle, center, inverse
@@ -219,9 +230,8 @@
 
             # Why this presentation?
 
-            - Made redundant Nov 2024
-            - Needed to fill my time
-            - Upskilling in a bunch of different areas
+            - More than just a blinky example
+            - Give tools to help make better hardware integrations
 
             ---
 
@@ -259,6 +269,11 @@
                 - Standby Mode: <6.0µA
                 - Sleep Mode: <1.0µA
 
+
+            ???
+
+            [ datasheet ](./assets/embedded-driver/CST816S_Datasheet_EN.pdf)
+
             ---
 
             # Target Device: Hynitron CST816S
@@ -266,6 +281,15 @@
             ### Communication:
             - I²C interface (10KHz-400KHz)
             - Interrupt Request (IRQ) pin for event signaling
+
+            ???
+
+            [registers](./assets/embedded-driver/CST816S_register_declaration.pdf)
+
+            ---
+
+            ![First page of the device driver register definition PDF](./assets/embedded-driver/test.png "Register Definitions Page 1")
+
 
             ---
 
@@ -647,10 +671,7 @@
 
     </textarea
         >
-        <script
-            src="https://remarkjs.com/downloads/remark-latest.min.js"
-            type="text/javascript"
-        ></script>
+        <script src="./assets/remark.js" type="text/javascript"></script>
         <script type="text/javascript">
             var slideshow = remark.create();
         </script>
